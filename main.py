@@ -33,6 +33,7 @@ class CustomedReplyPromptPlugin(Star):
         """ 
         # 检查是否是群聊消息
         if event.get_message_type() != MessageType.GROUP_MESSAGE: 
+            logger.debug(f"非群聊消息，跳过提示词替换")
             return 
         
         # 检查是否启用了主动回复功能
