@@ -57,7 +57,7 @@ class CustomedReplyPromptPlugin(Star):
                     if replace_text.strip(): 
                         content = content[:match.start()] + replace_text 
                         ctx["content"] = content 
-                        logger.debug(f"已替换为自定义主动回复提示词: {replace_text}") 
+                        logger.info(f"已替换为自定义主动回复提示词") 
 
     async def terminate(self): 
         """插件卸载时的清理工作"""
