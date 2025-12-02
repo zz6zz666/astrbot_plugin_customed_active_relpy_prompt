@@ -12,18 +12,18 @@ class CustomedReplyPromptPlugin(Star):
         self.config = config  # AstrBotConfig继承自Dict，可以直接使用字典方法访问 
         logger.info("自定义主动回复提示词插件已初始化") 
     
-    def _is_active_reply_enabled(self, event: AstrMessageEvent) -> bool: 
-        """
-        检查是否启用了主动回复功能
-        """
-        try: 
-            # 获取配置信息，与long_term_memory.py中的cfg方法保持一致
-            cfg = self.context.get_config(umo=event.unified_msg_origin) 
-            active_reply = cfg["provider_ltm_settings"]["active_reply"] 
-            return active_reply.get("enable", False) 
-        except Exception as e: 
-            logger.error(f"获取主动回复配置失败: {e}") 
-            return False 
+    # def _is_active_reply_enabled(self, event: AstrMessageEvent) -> bool: 
+    #     """
+    #     检查是否启用了主动回复功能
+    #     """
+    #     try: 
+    #         # 获取配置信息，与long_term_memory.py中的cfg方法保持一致
+    #         cfg = self.context.get_config(umo=event.unified_msg_origin) 
+    #         active_reply = cfg["provider_ltm_settings"]["active_reply"] 
+    #         return active_reply.get("enable", False) 
+    #     except Exception as e: 
+    #         logger.error(f"获取主动回复配置失败: {e}") 
+    #         return False 
             
     @filter.on_llm_request(priority=-10)    # 优先级设为-10，确保在其他处理后（包括long term memory）执行 
     async def process_user_prompt(self, event: AstrMessageEvent, req: ProviderRequest): 
@@ -36,10 +36,10 @@ class CustomedReplyPromptPlugin(Star):
             logger.debug(f"非群聊消息，跳过提示词替换")
             return 
         
-        # 检查是否启用了主动回复功能
-        if not self._is_active_reply_enabled(event): 
-            logger.debug(f"主动回复功能未启用，跳过提示词替换")
-            return 
+        # # 检查是否启用了主动回复功能
+        # if not self._is_active_reply_enabled(event): 
+        #     logger.debug(f"主动回复功能未启用，跳过提示词替换")
+        #     return 
 
         if req.contexts and len(req.contexts) > 0: 
             # 直接获取最后一个消息（在主动回复场景下，这里应该是user字段） 
