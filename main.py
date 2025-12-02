@@ -25,7 +25,7 @@ class CustomedReplyPromptPlugin(Star):
             logger.error(f"获取主动回复配置失败: {e}") 
             return False 
             
-    @filter.on_llm_request(priority=-10)    # 优先级设为-10，确保在其他处理后（包括long term memory）执行 
+    @filter.on_llm_request()    # 优先级设为-10，确保在其他处理后（包括long term memory）执行 
     async def process_user_prompt(self, event: AstrMessageEvent, req: ProviderRequest): 
         """ 
         在群聊场景下，当启用主动回复功能时， 
